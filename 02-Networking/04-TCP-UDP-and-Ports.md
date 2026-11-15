@@ -469,14 +469,27 @@ Event IDs need context; a single failed logon is not sufficient to establish an 
 
 ## 13. Day 4 Practical Checklist
 
-- [ ] Explain TCP and UDP in my own words.
-- [ ] Explain the TCP three-way handshake.
-- [ ] Identify at least 15 common ports and their services.
-- [ ] Run `netstat -ano` and identify a PID.
-- [ ] Run `Test-NetConnection example.com -Port 443`.
-- [ ] Run `ss -tuln` on Linux.
-- [ ] Apply at least three Wireshark display filters.
-- [ ] Write a short triage summary for the port 4444 case study.
+- [x] Explain TCP and UDP in my own words.
+- [x] Explain the TCP three-way handshake.
+- [x] Identify at least 15 common ports and their services.
+- [x] Run `netstat -ano` and identify a PID.
+- [x] Run `Test-NetConnection example.com -Port 443`.
+- [x] Run `ss -tuln` on Linux.
+- [ ] Apply at least three Wireshark display filters. (Pending)
+- [x] Write a short triage summary for the port 4444 case study.
+
+### Progress Update
+
+- [x] TCP and UDP concepts reviewed.
+- [x] TCP three-way handshake understood.
+- [x] Common ports and services reviewed.
+- [x] Windows practical: `netstat -ano` and PID identification completed.
+- [x] Windows practical: TCP port connectivity test completed.
+- [x] Linux socket inspection practical completed.
+- [ ] Wireshark packet-capture exercise and display-filter practice — **remaining task**.
+- [x] Port 4444 SOC case study reviewed.
+
+**Current status:** Day 4 practical work is nearly complete. Only the Wireshark exercise remains before marking Day 4 fully complete.
 
 ## 14. Quick Revision
 
