@@ -475,7 +475,7 @@ Event IDs need context; a single failed logon is not sufficient to establish an 
 - [x] Run `netstat -ano` and identify a PID.
 - [x] Run `Test-NetConnection example.com -Port 443`.
 - [x] Run `ss -tuln` on Linux.
-- [ ] Apply at least three Wireshark display filters. (Pending)
+- [x] Apply at least three Wireshark display filters.
 - [x] Write a short triage summary for the port 4444 case study.
 
 ### Progress Update
@@ -486,10 +486,10 @@ Event IDs need context; a single failed logon is not sufficient to establish an 
 - [x] Windows practical: `netstat -ano` and PID identification completed.
 - [x] Windows practical: TCP port connectivity test completed.
 - [x] Linux socket inspection practical completed.
-- [ ] Wireshark packet-capture exercise and display-filter practice — **remaining task**.
+- [x] Wireshark packet-capture exercise and display-filter practice.
 - [x] Port 4444 SOC case study reviewed.
 
-**Current status:** Day 4 practical work is nearly complete. Only the Wireshark exercise remains before marking Day 4 fully complete.
+**Current status:** All Day 4 learning and practical tasks are marked complete, including the Wireshark exercise.
 
 ## 14. Quick Revision
 
