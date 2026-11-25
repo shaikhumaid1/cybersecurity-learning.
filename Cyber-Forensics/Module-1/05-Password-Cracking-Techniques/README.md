@@ -356,3 +356,82 @@ Add screenshots of the actual terminal outputs for:
 6. Hashcat dictionary attack and `hashcat --show` verification.
 
 Do not include unrelated personal files or real credentials in screenshots.
+
+
+## 9. Beginner-Friendly Explanation — Understand the Practical Easily
+
+### What are we actually doing?
+
+Imagine a website stores your password as a hash instead of saving the password itself. When you log in, the website hashes the password you enter and compares it with the stored hash.
+
+In this practical, we created a sample password, converted it into a SHA-256 hash, and then asked two tools to test a short list of possible passwords until one produced the same hash.
+
+**Simple flow:**
+
+```text
+Test password: CyberLab@123
+          |
+          v
+     SHA-256 hashing
+          |
+          v
+Target hash saved in hash.txt
+          |
+          v
+John / Hashcat test candidates
+          |
+          v
+Candidate produces matching hash
+          |
+          v
+Recovered: CyberLab@123
+```
+
+### Understand the important terms
+
+- **Plaintext password:** The readable password before hashing. In our lab, it was `CyberLab@123`.
+- **Hash:** A fixed-length digital fingerprint of the input. Our SHA-256 hash was 64 hexadecimal characters long.
+- **Wordlist:** A text file containing possible passwords. Ours had three candidates.
+- **Dictionary attack:** A method that tests each candidate in the wordlist against the target hash.
+- **Hash matching:** When a candidate produces the same digest as the target, the tool reports that candidate as a match.
+- **Pot file:** A local record used by password-auditing tools to remember hashes they have already recovered. That is why John later said there were no hashes left to crack.
+
+### Why did we use two tools?
+
+- **John the Ripper** and **Hashcat** both test password candidates against hashes, but they have different command options, supported formats and performance characteristics.
+- We used both against the same hash and same wordlist to confirm that they identified the same test password.
+- Hashcat detected a CPU-based OpenCL device in this lab. We did not establish that a GPU was used.
+
+### Understand the commands in plain language
+
+| Command / option | Meaning |
+|---|---|
+| `mkdir -p ...` | Create the practical folder, including any missing parent folders |
+| `cd ...` | Move into that folder |
+| `john --version` | Check the installed John version |
+| `hashcat --version` | Check the installed Hashcat version |
+| `john --list=formats` | See which hash formats John supports |
+| `hashcat -I` | See which compute devices Hashcat detects |
+| `echo -n 'CyberLab@123' | sha256sum` | Generate the SHA-256 digest without adding a newline |
+| `awk '{print $1}'` | Keep only the hash field from the command output |
+| `> hash.txt` | Save output to a file, replacing existing contents |
+| `>> wordlist.txt` | Add another line without replacing earlier lines |
+| `cat hash.txt` | Display the saved hash |
+| `john --format=Raw-SHA256 --wordlist=wordlist.txt hash.txt` | Ask John to test the wordlist against the SHA-256 hash |
+| `john --show --format=Raw-SHA256 hash.txt` | Display a password John has already recovered |
+| `hashcat -m 1400 hash.txt wordlist.txt` | Ask Hashcat to test the wordlist using SHA-256 mode |
+| `hashcat -m 1400 hash.txt --show` | Display Hashcat's recovered result |
+
+### What do the successful results mean?
+
+- John reported `1 password hash cracked`.
+- Hashcat reported `Status: Cracked` and `Recovered: 1/1`.
+- Both displayed `CyberLab@123`.
+- This happened because that exact password was deliberately included in our three-entry wordlist. It does not mean every password can be recovered this easily.
+
+### How is this useful in cybersecurity?
+
+In an authorized security audit, a security team may assess whether password hashes are stored safely and whether weak or commonly used passwords could be guessed. A SOC analyst may also investigate password-spraying or brute-force alerts, although those are authentication attacks and are not the same as offline hash cracking.
+
+**Remember this one sentence:** We did not decrypt the hash; we guessed candidate passwords, hashed each candidate, and found one whose hash matched the target.
+
