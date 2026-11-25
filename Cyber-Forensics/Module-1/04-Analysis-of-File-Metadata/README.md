@@ -293,15 +293,154 @@ Use photographs you created yourself or public sample files with permission.
 
 Do not publish private GPS coordinates, personal photographs or sensitive document metadata.
 
-## 13. Results record
+## 13. Practical experiment and recorded observations
 
-**Tool explored:** ExifTool.
+### 13.1 Test environment and sample
 
-The actual sample filenames, command output, metadata fields observed, hashes and screenshots have not yet been supplied. Add the real observations after completing or reviewing the experiment. Do not use the illustrative values above as actual lab results.
+| Item | Recorded value |
+|---|---|
+| Tool | ExifTool |
+| ExifTool version | 13.55 |
+| Operating environment | Linux command line |
+| Sample file | `img1.jpeg` |
+| File format | JPEG |
+| Reported file size | 53 kB |
+| Image dimensions | 738 × 414 pixels |
+| Image size | 0.306 megapixels |
+
+### 13.2 Command 1 — Basic metadata extraction
+
+**Command executed:**
+
+```bash
+exiftool /home/umaid/Downloads/img1.jpeg
+```
+
+**Important observed output:**
+
+| Metadata field | Actual value |
+|---|---|
+| File Name | img1.jpeg |
+| Directory | /home/umaid/Downloads |
+| File Size | 53 kB |
+| File Modification Date/Time | 2026:11:25 21:51:46+05:30 |
+| File Access Date/Time | 2026:11:25 21:51:46+05:30 |
+| File Inode Change Date/Time | 2026:11:25 21:51:46+05:30 |
+| File Permissions | -rw-r--r-- |
+| File Type | JPEG |
+| File Type Extension | jpg |
+| MIME Type | image/jpeg |
+| JFIF Version | 1.01 |
+| Resolution Unit | None |
+| X Resolution | 1 |
+| Y Resolution | 1 |
+| Image Width | 738 |
+| Image Height | 414 |
+| Encoding Process | Baseline DCT, Huffman coding |
+| Bits Per Sample | 8 |
+| Color Components | 3 |
+| YCbCr Sub Sampling | YCbCr4:2:0 (2 2) |
+| Image Size | 738x414 |
+| Megapixels | 0.306 |
+
+**Interpretation:**
+
+- The file is identified as a JPEG image with JFIF version 1.01.
+- The image contains 738 × 414 pixels, or approximately 0.306 megapixels.
+- It uses 8 bits per sample and three colour components.
+- The reported chroma subsampling is YCbCr 4:2:0.
+- The filesystem-related fields show modification, access and inode-change times, along with Linux file permissions.
+- The timestamp includes the UTC offset `+05:30`.
+
+### 13.3 Command 2 — Grouped metadata, duplicate and unknown tags
+
+**Command executed:**
+
+```bash
+exiftool -a -u -g1 /home/umaid/Downloads/img1.jpeg
+```
+
+**Purpose of the options:**
+
+- `-a`: allows duplicate tags to be displayed.
+- `-u`: requests unknown tags as well as recognized tags.
+- `-g1`: organizes the output by metadata group (family 1).
+
+**Groups actually displayed:**
+
+| Group | Fields observed |
+|---|---|
+| ExifTool | ExifTool Version Number: 13.55 |
+| System | File name, directory, file size, timestamps and permissions |
+| File | JPEG type, extension, MIME type, dimensions, encoding, bits per sample, colour components and subsampling |
+| JFIF | JFIF version, resolution unit and X/Y resolution |
+| Composite | Image size and megapixels |
+
+No camera make/model, original capture date, exposure, GPS, IPTC or XMP fields appeared in the supplied output. This means those fields were not exposed in this extraction; it does not prove that every possible metadata structure in the file is absent.
+
+The second command reported the file access time as `2026:11:25 21:53:01+05:30`, later than the first command's access time. This is consistent with the file being accessed during the examination. Access timestamps may change as a result of reading a file, depending on the filesystem and mount settings.
+
+### 13.4 Command 3 — JSON metadata export
+
+**Command executed:**
+
+```bash
+exiftool -json img1.jpeg
+```
+
+The command returned a JSON array containing one object for `img1.jpeg`. It included the ExifTool version, source file, file-system information, JPEG/JFIF fields, image dimensions and composite image measurements.
+
+Notable values in the JSON output:
+
+- `ExifToolVersion`: 13.55
+- `FileName`: img1.jpeg
+- `Directory`: .
+- `FileSize`: 53 kB
+- `ImageWidth`: 738
+- `ImageHeight`: 414
+- `ImageSize`: 738x414
+- `Megapixels`: 0.306
+
+The JSON output reports `Directory` as `.`, whereas the first command reports `/home/umaid/Downloads`. The JSON command was entered with a relative filename, so the output records the current working directory as `.`. This is a path-context difference, not evidence that the image content changed.
+
+**Why JSON is useful:** JSON provides structured output that can be parsed by scripts, stored in case notes, compared across files or imported into a data-analysis workflow.
+
+### 13.5 Command 4 — Save and review a text report
+
+**Command/output reviewed:**
+
+```bash
+cat metadata.txt
+```
+
+The displayed text report contains the metadata output for `img1.jpeg`, including the file-system fields, JPEG/JFIF properties, dimensions and composite values.
+
+The `cat` command displays the saved text file; it does not perform a new metadata extraction. The report is useful for retaining a readable record of the earlier ExifTool output.
+
+### 13.6 Overall findings
+
+1. ExifTool 13.55 successfully identified and read the supplied JPEG file.
+2. The image dimensions were 738 × 414 pixels and the reported size was 53 kB.
+3. JPEG/JFIF technical properties were extracted, including baseline DCT encoding, 8 bits per sample, three colour components and YCbCr 4:2:0 subsampling.
+4. Filesystem metadata included timestamps and Linux permissions.
+5. The grouped output did not display camera-identification, GPS, IPTC or XMP fields.
+6. JSON export and a text report were produced and reviewed.
+
+### 13.7 Forensic interpretation and limitations
+
+- The displayed file modification, access and inode-change timestamps describe filesystem-level information available to ExifTool on the examination system. They should not be treated as the photograph's original capture time.
+- The file permissions `-rw-r--r--` represent read/write permission for the owner and read permission for group and others in the displayed Linux permission format.
+- JFIF and JPEG technical fields describe the image encoding and dimensions; they do not identify the photographer.
+- No GPS coordinates or camera make/model were present in the supplied output. Therefore, this result cannot be used to establish the photograph's capture location or camera.
+- A missing metadata field does not prove that the file was never created by a camera or edited by software. Metadata may be stripped, omitted or unsupported.
+- No SHA-256 hash or before-and-after integrity comparison was supplied. File integrity verification is therefore not claimed.
+- The supplied commands are metadata-reading commands. The `cat` command reads the saved report.
+
+**Evidence status:** Four ExifTool outputs supplied and documented. Hash verification and comparison against an original source image were not supplied.
 
 ## 14. Conclusion
 
-Metadata analysis provides useful context about digital files. ExifTool supports broad extraction and examination of EXIF, IPTC, XMP and other metadata. However, metadata can be altered, removed or misinterpreted. A reliable examiner preserves the original, records exact commands, correlates metadata with independent evidence and clearly distinguishes observations from conclusions.
+In this practical, ExifTool 13.55 was used to inspect a JPEG image, display grouped metadata, export metadata in JSON format and review a saved text report. The examination identified a 53 kB JPEG image with dimensions of 738 × 414 pixels and several JPEG/JFIF technical properties. Filesystem timestamps and Linux permissions were also displayed. No camera, GPS, IPTC or XMP fields appeared in the supplied extraction. The results demonstrate how metadata can provide technical and filesystem context, while also showing why missing fields and timestamps must be interpreted carefully. Metadata alone cannot prove the identity of the photographer, the original capture time or the location of the image.
 
 ## 15. References
 
@@ -310,4 +449,4 @@ Metadata analysis provides useful context about digital files. ExifTool supports
 - NIST SP 800-86: https://csrc.nist.gov/pubs/sp/800/86/final
 - NIST Digital Investigation Techniques: https://www.nist.gov/publications/digital-investigation-techniques-scientific-foundation-review
 
-**Practical status:** ExifTool explored; detailed sample outputs and screenshots to be added.
+**Practical status:** ExifTool extraction, grouped output, JSON export and text-report review completed and documented from the supplied command output.
