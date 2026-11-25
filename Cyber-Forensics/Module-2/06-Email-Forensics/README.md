@@ -275,3 +275,50 @@ The sample's SHA-256 digest was recorded as:
 - No network connection was made to the URL.
 - No real mailbox, mail server, sender or recipient was investigated.
 - The supplied command outputs are the evidence recorded for this practical; screenshots may be added separately if required by the lab instructor.
+
+
+## Appendix A — Original synthetic email sample
+
+The following is the complete training email examined in this practical. It is included so the README is self-contained and readers can reproduce the analysis. Save the block exactly as `practical06_synthetic_phishing_sample.eml` if recreating the exercise.
+
+```text
+From: "PayPal Account Security" <billing@secure-payments.example>
+To: Digital Forensics Lab <analyst@lab.example>
+Date: Wed, 25 Nov 2026 16:45:12 +0000
+Subject: [ACTION REQUIRED] Your account will be limited
+Message-ID: <20261125164512.78421@mail.secure-payments.example>
+Return-Path: <bounce@mailer-notify.example>
+Reply-To: <account-review@protonmail.example>
+MIME-Version: 1.0
+Content-Type: text/plain; charset="UTF-8"
+X-Mailer: Synthetic-Mailer/1.0
+Received: from mail.secure-payments.example (unknown [203.0.113.45])
+        by mx.lab.example (Postfix) with ESMTP id LAB123456
+        for <analyst@lab.example>; Wed, 25 Nov 2026 16:45:14 +0000
+Authentication-Results: mx.lab.example;
+        spf=fail (sender IP is 203.0.113.45) smtp.mailfrom=mailer-notify.example;
+        dkim=fail (bad signature) header.d=secure-payments.example;
+        dmarc=fail (p=reject) header.from=secure-payments.example
+
+Hello,
+
+We detected unusual activity on your payment account. For your protection,
+your account will be restricted within 24 hours unless you verify your details.
+
+Review your account now:
+https://account-check.secure-payments.example/verify
+
+If you did not request this review, reply directly to this message.
+
+Regards,
+PayPal Account Security Team
+
+--- LAB NOTES ---
+This is a completely synthetic training artifact. It was not sent, received,
+or authenticated by any real mail system. All domains ending in .example and
+the IP address 203.0.113.45 are reserved for documentation/examples.
+Authentication-Results is illustrative text inserted for the exercise; it is
+not a real SPF, DKIM, or DMARC evaluation.
+```
+
+**Reproduction note:** The synthetic sample's SHA-256 digest recorded during the practical was `fa8f3d8ddd75c0e3f48bd92c0d1dcd91e1b553847f38c1b8ef2fe06c919fafef`. Recalculate the digest after saving the sample to confirm that the copied file matches the examined artefact.
