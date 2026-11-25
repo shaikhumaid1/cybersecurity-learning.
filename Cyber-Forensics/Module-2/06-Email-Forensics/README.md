@@ -322,3 +322,121 @@ not a real SPF, DKIM, or DMARC evaluation.
 ```
 
 **Reproduction note:** The synthetic sample's SHA-256 digest recorded during the practical was `fa8f3d8ddd75c0e3f48bd92c0d1dcd91e1b553847f38c1b8ef2fe06c919fafef`. Recalculate the digest after saving the sample to confirm that the copied file matches the examined artefact.
+
+
+## 5. Beginner-Friendly Explanation — Understand the Practical Easily
+
+### What is email forensics?
+
+Email forensics is the examination of an email to understand where it appears to have come from, who it was addressed to, how it was routed, what it contains, and whether it shows signs of phishing or another suspicious activity.
+
+Think of an email like a physical letter:
+
+- The **envelope information** helps describe where the letter is going and where replies may be routed.
+- The **letter content** is the message the recipient reads.
+- The **delivery markings** can help investigators understand how it travelled.
+
+An email file commonly separates into two main parts:
+
+1. **Headers:** Technical information such as From, To, Subject, Received and authentication-result fields.
+2. **Body:** The actual message text, links and attachments (if present).
+
+A blank line separates the headers from the body in the sample we examined.
+
+### What did we do in this practical?
+
+We used a synthetic email that pretended to be an account-security notification. We did not send it or connect to a real mail server.
+
+Our workflow was:
+
+```text
+Synthetic .eml file
+       |
+       v
+Check file and identify its type
+       |
+       v
+Read email headers
+       |
+       v
+Read message body
+       |
+       v
+Extract email-like strings, URL and IP
+       |
+       v
+Review suspicious indicators
+       |
+       v
+Calculate SHA-256 file hash
+```
+
+### Understand the important email headers
+
+| Header | Beginner-friendly meaning |
+|---|---|
+| `From` | The sender identity displayed in the message. It can be spoofed, so do not trust it by itself. |
+| `To` | The intended recipient shown in the message. |
+| `Subject` | The message's subject line. |
+| `Return-Path` | The envelope sender address recorded for delivery and usually used for bounce handling. |
+| `Reply-To` | The address the mail client is instructed to use when the recipient replies. |
+| `Received` | A mail-transfer record added by a mail server. In real investigations, trust only entries added by known, trusted mail infrastructure. |
+| `Message-ID` | A message identifier. It is not proof of who sent the email. |
+| `Authentication-Results` | A receiving system's reported email-authentication checks. In our sample, these values were manually inserted for training. |
+
+### What are SPF, DKIM and DMARC?
+
+These are email-authentication mechanisms that help receiving systems assess whether a message is authorized and aligned with the domain shown to the recipient.
+
+- **SPF (Sender Policy Framework):** Checks whether the sending IP is authorized by the domain used for the SMTP envelope sender.
+- **DKIM (DomainKeys Identified Mail):** Uses a digital signature to help verify that signed message content/headers have not been altered and that the signature is associated with a signing domain.
+- **DMARC (Domain-based Message Authentication, Reporting and Conformance):** Uses the visible From domain and requires alignment with at least one passing SPF or DKIM identity; it also lets a domain publish a policy and receive reports.
+
+**Important:** A pass does not guarantee that an email is safe, and a fail by itself does not prove phishing. Investigators consider authentication alongside headers, message content, URLs, sender history and other evidence. In this exercise, the SPF/DKIM/DMARC failures were example text, not real checks.
+
+### What suspicious signs did our sample contain?
+
+1. The display name claimed to be a payment service's security team, but the sender address used `secure-payments.example`.
+2. The Return-Path used a different domain: `mailer-notify.example`.
+3. The Reply-To used another domain: `protonmail.example`.
+4. The subject and body created urgency by warning of account restriction within 24 hours.
+5. The message asked the recipient to verify account details through a link.
+6. The sample included SPF, DKIM and DMARC failure text, but those results were manually inserted for the lab.
+
+These are **indicators**, not independent proof of a real phishing campaign. The example domains and IP are reserved for documentation.
+
+### Why did we use these Linux commands?
+
+| Command | What it does in this practical |
+|---|---|
+| `ls -lh` | Shows the file, readable size and permissions |
+| `file sample.eml` | Identifies the file type |
+| `sed -n '1,/^$/p' sample.eml` | Prints the header section up to the blank separator |
+| `sed -n '/^$/,$p' sample.eml` | Prints from the blank separator to the end, showing the body and trailing lab notes |
+| `grep -Eoi ...` | Finds text that looks like email addresses; matches still need manual checking |
+| `grep -Eo 'https?://...' ...` | Extracts URL-like strings |
+| `grep -Eo '...' ...` | Extracts IPv4-looking strings; the pattern does not validate whether an IP is real or routable |
+| `grep -nE '^(From:|To:|...)' ...` | Shows selected headers with their line numbers |
+| `nl -ba sample.eml` | Displays the file with line numbers, including blank lines |
+| `sha256sum sample.eml` | Calculates a file digest that can be compared later to check whether the file changed |
+
+### What does the SHA-256 result tell us?
+
+The SHA-256 digest is a fingerprint of the exact file contents. If the file changes, its digest will almost certainly change too. We recorded the digest so it can be recalculated later and compared with the original value.
+
+A matching digest helps show that two copies have the same contents. It does **not**, by itself, prove who created or sent the email, whether the message is genuine, or whether the evidence was collected with a complete chain of custody.
+
+### How is this useful in a SOC?
+
+When a user reports a suspicious email, a Tier 1 SOC analyst may:
+
+1. Preserve the original email as an evidence file rather than forwarding or editing it.
+2. Inspect sender, recipient, Reply-To, Return-Path and trusted Received headers.
+3. Review SPF, DKIM and DMARC results in the context of the mail gateway.
+4. Extract URLs, domains, IP addresses and attachment names as potential indicators of compromise (IOCs).
+5. Check indicators using approved internal tools and threat-intelligence sources.
+6. Search whether other users received the same message.
+7. Escalate suspicious findings according to the incident-response process.
+
+**Remember this one sentence:** Email forensics means examining the email's technical headers and message content together, rather than trusting only the sender name or what the message says.
+
