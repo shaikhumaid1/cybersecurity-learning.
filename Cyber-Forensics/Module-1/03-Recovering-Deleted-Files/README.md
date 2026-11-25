@@ -267,3 +267,66 @@ Deleted-file recovery relies on surviving file-system metadata, raw data signatu
 - NIST SP 800-86: https://csrc.nist.gov/pubs/sp/800/86/final
 
 **Practical status:** Recuva and Disk Drill explored; detailed experiment results to be added.
+
+
+## 16. Actual Disk Drill scan results (additional screenshots)
+
+### Device and initial condition
+- Source: SanDisk Cruzer Blade USB flash drive
+- Drive letter: E:
+- Capacity displayed in Disk Drill: 7.29 GB
+- File system: FAT32
+- Connection: USB
+- Before scanning, Windows File Explorer displayed "This folder is empty."
+
+### Scan completion
+Disk Drill displayed the completion notification: **"All recovery methods complete — 143 files / 9.68 GB found."**
+
+The 9.68 GB value is the application's reported total for found file entries. It exceeds the displayed physical USB capacity of 7.29 GB, so it must not be interpreted as 9.68 GB of unique, successfully restored data. Reconstructed candidates and overlapping or fragmented content can affect scan totals.
+
+### Visible file categories
+
+| Category | Count shown | Displayed size |
+|---|---:|---:|
+| JPG | 9 | 2.87 MB |
+| PNG | 10 | 1.82 MB |
+| Videos | 15 | 4.07 GB |
+| 3GP (inside Videos) | 2 | 4.19 MB |
+| AVI (inside Videos) | 1 | 293 MB |
+| M1V (inside Videos) | 7 | 12.4 MB |
+| MP4 (inside Videos) | 3 | 1.96 GB |
+| WEBM (inside Videos) | 2 | 1.80 GB |
+
+These are the values visible in the supplied screenshots. Nested video subcategories should not be added to the parent Videos total as if they were separate top-level categories.
+
+### Recovery-chance indicators
+
+The screenshots show Disk Drill's estimated recovery-chance labels:
+- **High:** filled star; a more favorable estimate.
+- **Average:** partly filled star; an intermediate estimate.
+- **Low:** empty star; a less favorable estimate.
+
+Visible JPG examples are marked Low, visible PNG examples are marked High, and the displayed M1V entries are marked Average. These are estimates, not guarantees. Disk Drill's vendor documentation explains that the application evaluates whether file content appears intact; preview and validation are still required before treating a file as successfully recovered. <https://www.cleverfiles.com/help/estimated-recovery-chances-in-disk-drill/>
+
+### Reconstructed file names
+
+The M1V list includes generated names such as `file000001.m1v` and `file000002.m1v`. The JPG list also includes generic names containing image dimensions. Such generic naming is consistent with signature-based reconstruction, where original filenames or directory metadata may not be available. <https://www.cleverfiles.com/help/scanning-faqs/>
+
+### Interpretation and evidence limitations
+
+The USB volume appeared empty in File Explorer, while Disk Drill's completed scan identified 143 file entries totalling 9.68 GB according to its notification. This demonstrates that a normal directory listing and a recovery scan can show different results.
+
+The screenshots prove that Disk Drill detected these candidates; they do **not** prove that all candidates were restored, are complete, or open correctly. The screenshots do not show a completed recovery destination, file-opening validation, SHA-256 hashes, or whether scanning was performed against a forensic image or the original USB device. No Recuva results have been supplied.
+
+**Evidence status:** Disk Drill scan completed; 143 files / 9.68 GB reported by the application. Actual file restoration and integrity verification remain unconfirmed.
+
+### Further validation
+1. Preview representative JPG, PNG and video candidates.
+2. Select a small sample with High, Average and Low estimates.
+3. Recover selected test files to a separate storage device, never back to the source USB.
+4. Open the recovered files in their native applications or a suitable media player.
+5. Calculate and record SHA-256 hashes.
+6. Record which files open correctly, are partial/corrupt, or cannot be recovered.
+7. If available, perform a separate Recuva scan on a forensic working copy.
+
+**Updated practical status:** Disk Drill scan completed and screenshot findings documented. Recuva comparison, file restoration and integrity validation remain pending.
