@@ -1,102 +1,113 @@
-🛡️ Cybersecurity Learning Journey
+# 🛡️ Cybersecurity Learning Journey
 
 Welcome to my hands-on cybersecurity learning repository.
 
-This repository documents my journey toward building a career in cybersecurity, with a focus on Blue Team operations, Security Monitoring, Incident Response and SOC Analysis.
+This repository documents my development toward a career in **Blue Team operations and SOC Analysis**, alongside networking, Linux administration and digital forensics.
 
-My approach is simple: Learn the concepts, practise in labs, investigate security events and document the findings.
+My workflow is:
 
----
+**Learn → Practise → Investigate → Document → Improve**
 
-🎯 Learning Objectives
+## 🎯 Learning Objectives
 
-- Build strong cybersecurity fundamentals.
-- Develop networking and Linux administration skills.
-- Understand Windows and Linux security.
-- Analyse network traffic and security logs.
-- Learn SIEM tools and security monitoring.
-- Practise incident detection and response.
-- Develop analytical, problem-solving and documentation skills.
+- Build strong cybersecurity and networking fundamentals.
+- Develop Linux and Windows administration and security skills.
+- Analyse network traffic, authentication events and system logs.
+- Understand SIEM platforms and security monitoring.
+- Practise alert triage and incident investigation.
+- Learn digital forensics and evidence-handling principles.
+- Develop clear technical documentation and reporting skills.
 
-🧰 Learning Environment & Tools
+## 🧰 Learning Environment & Tools
 
-Category| Technologies
-Operating Systems| Windows 11, Ubuntu WSL, Kali Linux WSL
-Networking| TCP/IP, DNS, DHCP, NAT
-Network Analysis| Wireshark, Nmap
-Linux| Ubuntu, Kali Linux, Linux CLI
-Programming| Python, Bash
-SIEM| Wazuh, Splunk (learning roadmap)
-Frameworks| MITRE ATT&CK
-Version Control| Git, GitHub
+| Category | Tools / topics | Status |
+|---|---|---|
+| Operating systems | Windows 11, Kali Linux, Ubuntu WSL | Hands-on learning |
+| Virtualization | VMware Workstation | Lab environment |
+| Networking | TCP/IP, DNS, DHCP, NAT, subnetting | Learning and practice |
+| Network analysis | Wireshark, Nmap | Learning and lab practice |
+| Digital forensics | FTK Imager, ExifTool, Disk Drill | Practical exercises |
+| Password auditing | John the Ripper, Hashcat | Controlled lab exercises |
+| SIEM | Wazuh, Splunk | Learning |
+| Programming | Python, Bash | Learning and practice |
+| Frameworks | MITRE ATT&CK | Study |
+| Version control | Git, GitHub | Documentation |
 
-Tools and technologies are being explored through practical learning and labs.
+## 📂 Main Learning Areas
 
----
+### 1. Cyber Forensics
 
-📚 8-Week Cybersecurity Roadmap
+**Progress: 6 practicals documented out of 10.**
 
-Week| Learning Area| Status
-01| Cybersecurity Fundamentals| In Progress
-02| Networking for Security| Upcoming
-03| Linux & Windows Security| Upcoming
-04| Cryptography & Authentication| Upcoming
-05| Network Security| Upcoming
-06| Web Security & Malware| Upcoming
-07| SIEM & SOC Operations| Upcoming
-08| Incident Response| Upcoming
+| Module | Practical | Topic | Status |
+|---|---:|---|---|
+| Module 1 | 01 | Study of Cyber Forensics Tools | Documented |
+| Module 1 | 02 | Creating and Verifying Disk Images | Documented |
+| Module 1 | 03 | Recovering Deleted Files | Documented |
+| Module 1 | 04 | Analysis of File Metadata | Documented |
+| Module 1 | 05 | Password Cracking Techniques | Documented |
+| Module 2 | 06 | Email Forensics | Documented |
+| Module 2 | 07 | Network Traffic Analysis | Planned |
+| Module 2 | 08 | Log File Analysis | Planned |
+| Module 2 | 09 | Browser Forensics | Planned |
+| Module 2 | 10 | Mobile Device Forensics (Basic Study) | Planned |
 
----
+- [Open Cyber Forensics index](Cyber-Forensics/README.md)
+- [Module 1 practicals](Cyber-Forensics/Module-1/)
+- [Module 2 practicals](Cyber-Forensics/Module-2/)
 
-🔬 Practical Learning
+Each practical is documented with its aim, requirements, procedure, actual observations, interpretation, limitations and beginner-friendly explanations where applicable.
 
-I will document practical exercises, commands, investigation steps and findings as I complete them.
+### 2. SOC Analyst 30-Day Challenge
 
-Planned areas:
+A learning track for understanding SOC operations and preparing a practical home lab.
 
-- Linux user and permission management
-- Authentication log analysis
-- Network traffic analysis using Wireshark
-- Network scanning with Nmap
-- Windows Event Log investigation
-- SIEM alert monitoring and triage
-- Incident investigation and reporting
+- [Day 01 — SOC Fundamentals & Lab Environment Preparation](SOC-Analyst-30-Day-Challenge/Day-01.md)
 
----
+**Recorded status:** Day 01 theory and lab planning documented. System verification, Ubuntu Server deployment, Wazuh installation and endpoint integration are marked pending in the Day 01 notes.
 
-📂 Repository Structure
+### 3. Cybersecurity Fundamentals & Networking
 
+Study areas include:
+
+- Security principles and common attack concepts
+- TCP/IP, DNS, DHCP, NAT and subnetting
+- Linux users, groups, permissions and services
+- Windows security events and authentication
+- Network troubleshooting and traffic analysis
+
+Practical topics will be marked complete only after the corresponding lab work and evidence have been recorded.
+
+## 🧪 Lab Ethics & Evidence Handling
+
+- Perform security testing only on systems I own or have explicit permission to assess.
+- Use synthetic data or authorized lab evidence.
+- Preserve original evidence and document acquisition or analysis limitations.
+- Record actual outputs; do not present planned work as completed.
+- Redact credentials, personal data, device identifiers and other sensitive information before publishing.
+
+## 🏁 Portfolio Goals
+
+1. Complete all ten syllabus-based cyber forensics practicals.
+2. Build and document a functional home SOC lab.
+3. Investigate Windows and Linux security events.
+4. Practise network traffic analysis and SIEM alert triage.
+5. Produce structured investigation reports with evidence, findings and recommendations.
+
+## 📁 Repository Structure
+
+```text
 cybersecurity-learning/
-│
-├── 01-Cybersecurity-Fundamentals/
-├── 02-Networking/
-├── 03-Linux-Security/
-├── 04-Security-Tools/
-├── 05-SOC-Operations/
-└── Progress/
+├── Cyber-Forensics/
+│   ├── Module-1/
+│   ├── Module-2/
+│   └── README.md
+└── SOC-Analyst-30-Day-Challenge/
+    └── Day-01.md
+```
 
-Folders will be populated as I complete each topic and practical exercise.
-
----
-
-🏁 Portfolio Goals
-
-My objective is to build demonstrable cybersecurity experience through:
-
-1. Hands-on technical labs.
-2. Network and security log analysis.
-3. Practical SOC investigation scenarios.
-4. Documented findings and remediation recommendations.
-5. Continuous improvement through independent learning.
+The repository structure will expand as additional labs and learning areas are completed.
 
 ---
 
-⚠️ Lab Ethics
-
-All security testing and experiments will be performed only in authorized environments, personal labs or systems where permission has been granted.
-
----
-
-Learn • Practise • Investigate • Document
-
-Building cybersecurity skills through consistent hands-on learning.
+*Learning responsibly and building practical cybersecurity skills one lab at a time.*
